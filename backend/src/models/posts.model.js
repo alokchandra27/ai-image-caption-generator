@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
     caption:String,
     user:{
         type:mongoose.Schema.Types.ObjectId, //user id
-        ref:"users" //kis collection se belong krta haiii , means dbcompass ke ander collection ka name
+        ref:"user" //kis collection se belong krta haiii , means dbcompass ke ander collection ka name
     }
 })
 
