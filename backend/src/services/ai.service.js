@@ -29,7 +29,7 @@ async function generateCaption(base64ImageFile) {
         mime_type: "image/jpeg",
       },
     ],
-     system_instruction: "Funny & Meme-style, witty caption with emojis. Max 10 words. Use 3 Hastags related to the image",
+     system_instruction: "Funny & Meme-style, witty caption with emojis. Max 10 words. Use 3 Hastags related to the image . Give us atleast 2 caption ony by one",
   });
   // console.log(interaction.output_text);
 //   console.log("FULL INTERACTION RESPONSE:", JSON.stringify(interaction, null, 2));

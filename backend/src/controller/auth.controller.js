@@ -27,8 +27,12 @@ async function registerUser(req, res) {
     process.env.JWT_SECRET,
   );
 
-  res.cookie("token", token);
-
+  res.cookie("token", token, {
+    httpOnly: true, // JS se cookie access nahi hogi (Security)
+    secure: false, // Development mein false rakhein, Production (HTTPS) mein true
+    sameSite: "lax", // Cross-origin requests ke liye "lax" ya "none" (agar secure: true ho)
+    maxAge: 3600000, // 1 ghanta (ms mein)
+  });
   res.status(201).json({
     message: "User Registered Successfully",
     user,
@@ -63,9 +67,14 @@ async function logInUser(req, res) {
     process.env.JWT_SECRET,
   );
 
-  res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true, // JS se cookie access nahi hogi (Security)
+    secure: false, // Development mein false rakhein, Production (HTTPS) mein true
+    sameSite: "lax", // Cross-origin requests ke liye "lax" ya "none" (agar secure: true ho)
+    maxAge: 3600000, // 1 ghanta (ms mein)
+  });
 
-  res.status(201).json({
+  res.status(200).json({
     message: "User LoggedIn Successfully",
     user,
   });
