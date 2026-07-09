@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors")
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",// Replace with your frontend URL
+  origin: process.env.FRONTEND_URL ,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Allow cookies to be sent
 };

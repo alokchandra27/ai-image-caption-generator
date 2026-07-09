@@ -22,9 +22,11 @@ const Login = () => {
     console.log(data.username);
     console.log(data.password);
 
+    console.log(import.meta.env.VITE_API_URL);
+
     try {
       const API = import.meta.env.VITE_API_URL
-      const res = await axios.post(`${API}auth/login`, data  , {
+      const res = await axios.post(`${API}/auth/login`, data  , {
         withCredentials:true
       });
     //   console.log(res);
