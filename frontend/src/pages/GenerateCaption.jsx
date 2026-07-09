@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const GenerateCaption = () => {
   const [file, setFile] = useState(null);
@@ -9,6 +10,8 @@ const GenerateCaption = () => {
   const [caption, setCaption] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
+
+  const navigate = useNavigate()
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -25,7 +28,8 @@ const GenerateCaption = () => {
     formData.append("image", file);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/post", formData, {
+      const API = import.meta.env.VITE_API_URL
+      const res = await axios.post(`${API}/post`, formData, {
         withCredentials: true,
       });
       setCaption(res.data.post.caption);
@@ -35,8 +39,11 @@ const GenerateCaption = () => {
     } catch (error) {
       if (error.response?.status === 401) {
         toast.error("Unauthorized Access, Please Login First");
+        navigate("/login")
       } else {
         toast.error("Server Not Reachable");
+        navigate("/")
+
       }
     } finally {
       setLoading(false);
@@ -52,9 +59,9 @@ const GenerateCaption = () => {
         backgroundPosition: "center",
       }}
     >
-      {/* Container: Mobile pe full width, Tablet/Desktop pe restricted */}
+
       <div className="w-full max-w-lg p-6 bg-white rounded-3xl shadow-xl">
-        <ToastContainer />
+
         <h2 className="text-xl md:text-2xl font-bold mb-4 text-center">Generate Caption</h2>
 
         <input

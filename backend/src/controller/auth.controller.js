@@ -30,7 +30,7 @@ async function registerUser(req, res) {
   res.cookie("token", token, {
     httpOnly: true, // JS se cookie access nahi hogi (Security)
     secure: false, // Development mein false rakhein, Production (HTTPS) mein true
-    sameSite: "lax", // Cross-origin requests ke liye "lax" ya "none" (agar secure: true ho)
+    sameSite: "None", // Cross-origin requests ke liye "lax" ya "none" (agar secure: true ho)
     maxAge: 3600000, // 1 ghanta (ms mein)
   });
   res.status(201).json({
@@ -70,7 +70,7 @@ async function logInUser(req, res) {
   res.cookie("token", token, {
     httpOnly: true, // JS se cookie access nahi hogi (Security)
     secure: false, // Development mein false rakhein, Production (HTTPS) mein true
-    sameSite: "lax", // Cross-origin requests ke liye "lax" ya "none" (agar secure: true ho)
+    sameSite: "None", // Cross-origin requests ke liye "lax" ya "none" (agar secure: true ho)
     maxAge: 3600000, // 1 ghanta (ms mein)
   });
 

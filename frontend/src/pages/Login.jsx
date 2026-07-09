@@ -23,15 +23,15 @@ const Login = () => {
     console.log(data.password);
 
     try {
-      const API = "http://localhost:3000/api/auth";
-      const res = await axios.post(`${API}/login`, data  , {
+      const API = import.meta.env.VITE_API_URL
+      const res = await axios.post(`${API}auth/login`, data  , {
         withCredentials:true
       });
     //   console.log(res);
     if(res.status === 200){
        toast.success("User Logged In Successfully")
     }
-      navigate("/generateCaption")
+      navigate("/")
 
     } catch (error) {
       if (error.response) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -9,12 +10,14 @@ const Home = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/post", {
+        const API = import.meta.env.VITE_API_URL
+        const res = await axios.get(`${API}/post`, {
           withCredentials: true,
         });
         setPosts(res.data.posts);
+        toast.success("All Post Fetched")
       } catch (err) {
-        console.error(err);
+        toast.error("Failed to fetch posts , Please Login First");
       }
     };
     fetchPosts();
