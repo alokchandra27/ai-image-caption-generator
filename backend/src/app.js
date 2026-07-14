@@ -7,7 +7,7 @@ const cookieParser = require("cookie-parser")
 const cors = require("cors")
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: "https://ai-image-caption-generator-phi.vercel.app",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true, // Allow cookies to be sent
 };
