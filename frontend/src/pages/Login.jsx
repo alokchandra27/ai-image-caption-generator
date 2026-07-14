@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     const formData = new FormData(e.target);
 
@@ -19,34 +18,31 @@ const Login = () => {
       password: formData.get("password"),
     };
 
-  
-
     console.log(import.meta.env.VITE_API_URL);
 
     try {
-      const API = import.meta.env.VITE_API_URL
-      const res = await axios.post(`${API}/auth/login`, data  , {
-        withCredentials:true
+      const API = import.meta.env.VITE_API_URL;
+      const res = await axios.post(`${API}/auth/login`, data, {
+        // withCredentials: true,
       });
-    //   console.log(res);
-    if(res.status === 200){
-       toast.success("User Logged In Successfully")
-    }
-      navigate("/")
-
+      //   console.log(res);
+      if (res.status === 200) {
+        localStorage.setItem("token", res.data.token); 
+        toast.success("User Logged In Successfully");
+        navigate("/");
+      }
     } catch (error) {
       if (error.response) {
         if (error.response.status === 401) {
-           toast.error("Invalid Username or Password");
+          toast.error("Invalid Username or Password");
         } else {
-           toast.error("Something went wrong: " + error.response.data.message);
+          toast.error("Something went wrong: " + error.response.data.message);
         }
       } else {
-      toast.error("Server not Reachable");
+        toast.error("Server not Reachable");
       }
-    }
-    finally{
-        setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -59,7 +55,6 @@ const Login = () => {
         backgroundPosition: "center",
       }}
     >
-
       <div className="h-auto  md:h-[80%] w-full md:w-[70%] bg-white rounded-2xl flex flex-col md:flex-row overflow-hidden shadow-2xl">
         {/* Left Side: Form */}
         <div className="w-full md:w-1/2 h-auto md:h-full p-10 flex flex-col justify-center bg-white">

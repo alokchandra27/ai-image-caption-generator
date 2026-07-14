@@ -11,7 +11,7 @@ const GenerateCaption = () => {
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -28,10 +28,20 @@ const GenerateCaption = () => {
     formData.append("image", file);
 
     try {
-      const API = import.meta.env.VITE_API_URL
+      const API = import.meta.env.VITE_API_URL;
+
+      const token = localStorage.getItem("token");
+
       const res = await axios.post(`${API}/post`, formData, {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      // const res = await axios.post(`${API}/post`, formData, {
+      //   withCredentials: true,
+      // }); for cookies wali API
+
       setCaption(res.data.post.caption);
       if (res.status === 201) {
         toast.success("Caption Generated for You");
@@ -39,11 +49,10 @@ const GenerateCaption = () => {
     } catch (error) {
       if (error.response?.status === 401) {
         toast.error("Unauthorized Access, Please Login First");
-        navigate("/login")
+        navigate("/login");
       } else {
         toast.error("Server Not Reachable");
-        navigate("/")
-
+        navigate("/");
       }
     } finally {
       setLoading(false);
@@ -54,15 +63,16 @@ const GenerateCaption = () => {
     <div
       className="min-h-screen w-full flex justify-center items-center p-4"
       style={{
-        backgroundImage: "url('https://images.unsplash.com/photo-1610568781018-995405522539?q=80&w=1170&auto=format&fit=crop')",
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1610568781018-995405522539?q=80&w=1170&auto=format&fit=crop')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-
       <div className="w-full max-w-lg p-6 bg-white rounded-3xl shadow-xl">
-
-        <h2 className="text-xl md:text-2xl font-bold mb-4 text-center">Generate Caption</h2>
+        <h2 className="text-xl md:text-2xl font-bold mb-4 text-center">
+          Generate Caption
+        </h2>
 
         <input
           type="file"
@@ -77,10 +87,16 @@ const GenerateCaption = () => {
           className="border-2 border-dashed border-gray-300 rounded-2xl h-48 w-full flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 overflow-hidden"
         >
           {preview ? (
-            <img src={preview} alt="preview" className="h-full w-full object-cover" />
+            <img
+              src={preview}
+              alt="preview"
+              className="h-full w-full object-cover"
+            />
           ) : (
             <div className="text-center p-4">
-              <span className="text-emerald-600 font-bold">Click to select image</span>
+              <span className="text-emerald-600 font-bold">
+                Click to select image
+              </span>
               <p className="text-xs text-gray-400">JPG, PNG supported</p>
             </div>
           )}
@@ -90,7 +106,9 @@ const GenerateCaption = () => {
           onClick={generateCaption}
           disabled={loading || !file}
           className={`w-full mt-6 py-3 rounded-xl font-bold transition ${
-            loading ? "bg-gray-400 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-700 text-white"
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-emerald-600 hover:bg-emerald-700 text-white"
           }`}
         >
           {loading ? "AI is generating..." : "Generate Caption"}
