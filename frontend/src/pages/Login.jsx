@@ -19,8 +19,7 @@ const Login = () => {
       password: formData.get("password"),
     };
 
-    console.log(data.username);
-    console.log(data.password);
+  
 
     console.log(import.meta.env.VITE_API_URL);
 
